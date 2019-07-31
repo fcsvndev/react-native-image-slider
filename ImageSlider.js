@@ -75,7 +75,7 @@ class ImageSlider extends Component<PropsType, StateType> {
       return;
     }
     const isUpdating = index !== this._getPosition();
-    const x = Dimensions.get('window').width * index;
+    const x = this.state.width * index;
 
     this._ref && this._ref.scrollTo({ y: 0, x, animated });
 
@@ -175,13 +175,13 @@ class ImageSlider extends Component<PropsType, StateType> {
     this._clearInterval();
   }
 
-  _onLayout = () => {
-    this.setState({ width: Dimensions.get('window').width });
+  _onLayout = (layout) => {
+    this.setState({ width: layout.nativeEvent.layout.width });
     this._move(this.state.position, false);
   };
 
   _renderImage = (image: any, index: number) => {
-    const { width } = Dimensions.get('window');
+    const { width } = this.state;
     const { onPress, customSlide } = this.props;
     const offset = { marginLeft: index === -1 ? -width : 0 };
     const imageStyle = [styles.image, { width }, offset];
